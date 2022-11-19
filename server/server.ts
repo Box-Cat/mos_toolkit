@@ -2,6 +2,21 @@ import express, {Application, Request, Response, NextFunction} from 'express';
 import multer from 'multer';
 const {v4:uuid} = require("uuid");
 const mime = require("mime-types");
+const mysql = require('mysql');
+const cors = require('cors');
+
+const app : Application = express();
+const port : number = 5000;
+
+app.use(cors());
+app.use(express.json());
+
+const db = mysql.createConnection({
+    user: 'root',
+    host: '127.0.0.1',
+    password: '1234',
+    database: 'mosquito'
+  });
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, "./uploads"),
@@ -18,12 +33,27 @@ const storage = multer.diskStorage({
     }
 });
 
-const app : Application = express();
-const port : number = 5000;
-
 app.get('/',(req : Request,res : Response)=>{
-    res.send('Hello~~');
+    res.send('Server~~');
 });
+
+app.post('/auth/register',(req,res)=>{
+    console.log(req.body)
+    const id = req.body.id;
+    const password = req.body.password;
+    const name = req.body.name;
+    const email = req.body.email;
+    db.query("INSERT INTO mosquito.member (ID, PASSWORD, NAME ,EMAIL) VALUE( ?,?,?,?)",
+    [id, password, name ,email],
+    (err:any, result:any) => {
+        if(err) {
+            console.log(err)
+        }{
+            res.send("Values Inserted");
+        }
+    }
+    );
+})
 
 app.use("/uploads",express.static("uploads")); //이미지 파일명을 주소로 사용
 
