@@ -5,7 +5,7 @@ import Register from './features/register/Register';
 const App = () => {
   return (
     <div className="App">
-      <h1>React</h1>
+      <h1 className="text-3xl font-bold underline">React</h1>
       <Routes>
           <Route path="/auth/register" element={<Register/>}/>
           {/* <Route path="/" element={<Home/>}/>
