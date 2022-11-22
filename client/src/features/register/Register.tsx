@@ -1,6 +1,8 @@
 import React, { FormEvent, useState } from 'react'
 import axios from 'axios';
 import {Link} from  'react-router-dom';
+import CustomInput from '../../components/CustomInput';
+import { toast } from 'react-toastify';
 
 const Register = () => {
 
@@ -8,27 +10,27 @@ const Register = () => {
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [errors, setErrors] = useState<any>({});
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
-      console.log("id:", id);
-      //const res = await axios.post('http://localhost:5000/auth/register', {
-      axios.post('http://localhost:5000/auth/register', {
+      //axios.post('http://localhost:5000/auth/register', {
+      axios.post('/auth/register', {
         id: id,
         password: password,
         name: name,
         email: email,
       }).then(() => {
-        console.log("success")
-      }).catch(() => {
-        console.log("망함")
+        //console.log("success")
+        toast.success("success!!")
+      }).catch((error) => {
+        //console.log("error",error)
+        toast.error("fail!!")
       })
-      //console.log('res', res);
-      //router.push("/login");
     } catch (error: any) {
       console.log('error', error);
-      //setErrors(error.response.data || {});
+      setErrors(error.response.data || {});
     }
   }
 
@@ -38,30 +40,35 @@ const Register = () => {
         <div className="w-10/12 mx-auto md:w-96">
           <h1 className='mb-2 text-lg font-medium'>회원가입</h1>
           <form onSubmit={handleSubmit}>
-            <input
-              type='text'
-              value={id}
-              placeholder='id'
-              onChange={(event) => { setId(event.currentTarget.value); }}
-            /><br />
-            <input
+            <CustomInput
+               type='text'
+               value={id}
+               placeholder='id'
+               setValue={setId}
+               error={errors.id}
+            />
+            <CustomInput
               type='text'
               value={password}
               placeholder='password'
-              onChange={(event) => { setPassword(event.currentTarget.value); }}
-            /><br />
-            <input
-              type='text'
-              value={name}
-              placeholder='name'
-              onChange={(event) => { setName(event.currentTarget.value); }}
-            /><br />
-            <input
-              type='text'
-              value={email}
-              placeholder='email'
-              onChange={(event) => { setEmail(event.currentTarget.value); }}
-            /><br />
+              setValue={setPassword}
+              error={errors.password}
+            />
+            <CustomInput
+               type='text'
+               value={name}
+               placeholder='name'
+               setValue={setName}
+               error={errors.name}
+            />
+            <CustomInput
+               type='text'
+               value={email}
+               placeholder='email'
+               setValue={setEmail}
+               error={errors.email}
+            />
+            <br />
             <button className="w-full py-2 mb-1 text-xs font-bold text-white uppercase bg-gray-400 border-gray-400 rounded">
               회원 가입
             </button>

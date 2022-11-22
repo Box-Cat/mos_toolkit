@@ -1,8 +1,65 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import CustomInput from '../../components/CustomInput'
 
 const Login = () => {
+  const [id, setId] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [errors, setErrors] = useState<any>({});
+
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+    try {
+      //axios.post('http://localhost:5000/auth/register', {
+      axios.post('/auth/register', {
+      //axios.post('/auth/register', {
+        id: id,
+        password: password,
+      }).then(() => {
+        console.log("success")
+      }).catch((error) => {
+        console.log("error",error)
+      })
+    } catch (error: any) {
+      console.log('error', error);
+      setErrors(error.response.data || {});
+    }
+  }
+
   return (
-    <div>Login</div>
+    <div className='bg-white'>
+      <div className='flex flex-col items=center justify-center h-screen p-6'>
+        <div className="w-10/12 mx-auto md:w-96">
+          <h1 className='mb-2 text-lg font-medium'>로그인</h1>
+          <form onSubmit={handleSubmit}>
+            <CustomInput
+              type='text'
+              value={id}
+              placeholder='id'
+              setValue={setId}
+              error={errors.id}
+            />
+            <CustomInput
+              type='text'
+              value={password}
+              placeholder='password'
+              setValue={setPassword}
+              error={errors.password}
+            />
+            <button className="w-full py-2 mb-1 text-xs font-bold text-white uppercase bg-gray-400 border-gray-400 rounded">
+              로그인
+            </button>
+            <small>
+              아직 아이디가 없나요?
+              <Link to="/register">
+                <a className='ml-1 text-blue-500 uppercase'>회원가입</a>
+              </Link>
+            </small>
+          </form>
+        </div>
+      </div>
+    </div>
   )
 }
 

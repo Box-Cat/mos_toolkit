@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface CustomInputProps{
+type CustomInputProps = {
     className?: string;
     type?: string;
     placeholder?: string;
@@ -9,14 +9,14 @@ interface CustomInputProps{
     setValue: (str:string) => void;
 }
 
-const CustomInput: React.FC<CustomInputProps> = ({
+const CustomInput = ({
     className='mb-2',
     type="text",
     placeholder='',
     error, //대기
     value,
     setValue
-}) => {
+}:CustomInputProps) => {
   return (
     <div className={className}>
         <input
