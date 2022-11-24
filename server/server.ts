@@ -6,19 +6,23 @@ const { v4: uuid } = require("uuid");
 const mime = require("mime-types");
 const mysql = require('mysql');
 const cors = require('cors');
+const dotenv = require('dotenv');
+require('dotenv').config();
+
 
 const app: Application = express();
 const port: number = 5000;
+console.log(process.env);
 
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
 const db = mysql.createConnection({
-    user: 'root',
-    host: '127.0.0.1',
-    password: '1234',
-    database: 'mosquito'
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    password: process.env.DB_PWD,
+    database: process.env.DB_DATABASE 
 });
 
 //이미지 삽입
