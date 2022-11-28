@@ -1,25 +1,40 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import CustomInput from '../../components/CustomInput'
+import CustomInput from '../../components/CustomInput';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const [id, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<any>({});
 
-  const handleSubmit = async (event: any) => {
+  const [loginStatus, setLoginStatus] = useState<any>("");
+
+  axios.defaults.withCredentials = true;
+
+  useEffect(()=>{
+    axios.get('/auth/login').then((response)=>{
+      console.log(response)
+      if(response.data.loggedIn === true){
+        setLoginStatus(response.data.user[0].ID);
+        console.log("세션 저장중")
+      }
+    })
+  },[])
+
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
-      //axios.post('http://localhost:5000/auth/register', {
-      axios.post('/auth/register', {
-      //axios.post('/auth/register', {
+      axios.post('/auth/login', {
         id: id,
         password: password,
+        withCredentials: true
       }).then(() => {
-        console.log("success")
+        toast.success("success!!")
+        window.location.reload();
       }).catch((error) => {
-        console.log("error",error)
+        toast.error("fail!!")
       })
     } catch (error: any) {
       console.log('error', error);
@@ -29,9 +44,11 @@ const Login = () => {
 
   return (
     <div className='bg-white'>
+
       <div className='flex flex-col items=center justify-center h-screen p-6'>
         <div className="w-10/12 mx-auto md:w-96">
           <h1 className='mb-2 text-lg font-medium'>로그인</h1>
+          <h1>{loginStatus}</h1>
           <form onSubmit={handleSubmit}>
             <CustomInput
               type='text'

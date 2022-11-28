@@ -1,7 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 
 const imageRouter = express.Router();
-//const imageRouter = Router();
 const { upload } = require('../middleware/imageUpload')
 const { db } = require('../middleware/db')
 
