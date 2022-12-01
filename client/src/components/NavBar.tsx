@@ -1,7 +1,8 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
 //import { FaSearch } from "react-icons/fa";
 //import { useAuthDispatch, useAuthState } from "../context/auth"
 
@@ -22,7 +23,7 @@ const NavBar: React.FC = () => {
     // }
 
     
-  const logout = () => {
+  const handleLogout = () => {
     try{
       axios.post('/auth/logout').then(() => {
         toast.success("success!!")
