@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //import { FaSearch } from "react-icons/fa";
 //import { useAuthDispatch, useAuthState } from "../context/auth"
 
-const NavBar: React.FC = () => {
+const NavBar = () => {
     //const { loading, authenticated } = useAuthState();
     //const dispatch = useAuthDispatch();
     const [errors, setErrors] = useState<any>({});
@@ -22,72 +22,35 @@ const NavBar: React.FC = () => {
     //         })
     // }
 
-    
-  const handleLogout = () => {
-    try{
-      axios.post('/auth/logout').then(() => {
-        toast.success("success!!")
-        window.location.reload();
-      }).catch((error) => {
-        toast.error("fail!!")
-      })
-    }
-    catch(error :any){
-      console.log('error', error);
-      setErrors(error.response.data || {});
-    }
-  }
 
+    const handleLogout = () => {
+        try {
+            axios.post('/auth/logout').then(() => {
+                toast.success("success!!")
+                window.location.reload();
+            }).catch((error) => {
+                toast.error("fail!!")
+            })
+        }
+        catch (error: any) {
+            console.log('error', error);
+            setErrors(error.response.data || {});
+        }
+    }
+    //홈/게임/랭킹/자유게시판/로그아웃 or 로그인,회원가입
     return (
-        <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-between px-5 bg-white h-13">
-            <span className="text-2xl font-semibold text-gray-400">
-                <Link to="/">
-                    <a>
-                    {/* <Image
-                        src="/reddit-name-logo.png"
-                        alt="logo"
-                        width={80}
-                        height={45}
-                    >
-                    </Image> */}
-                    </a>
-                </Link>
-            </span>
-            <div className="max-w-full px-4">
-                <div className="relative flex items-center bg-gray-100 border rounded hover:border-gray-700 hover:bg-white">
-                    {/* <FaSearch className="ml-2 text-gray-400" /> */}
-                    <input
-                        type="text"
-                        placeholder="Search Reddit"
-                        className="px-3 py-1 bg-transparent rounded h-7 focus:outline-none"
-                    />
-                </div>
-            </div>
-
-            <div className="flex">
-                {/* {!loading && (
-                    authenticated ? (
-                        <button
-                            className="w-20 px-2 mr-2 text-sm text-center text-white bg-gray-400 rounded h-7"
-                            onClick={handleLogout}
-                        >
-                            로그아웃
-                        </button>
-                    ) : (<>
-                        <Link to="/login">
-                            <a className="w-20 px-2 pt-1 mr-2 text-sm text-center text-blue-500 border border-blue-500 rounded h-7">
-                                로그인
-                            </a>
-                        </Link>
-                        <Link to="/register">
-                            <a className="w-20 px-2 pt-1 text-sm text-center text-white bg-gray-400 rounded h-7">
-                                회원가입
-                            </a>
-                        </Link>
-                    </>)
-                )} */}
-            </div>
+        <>
+        <div className="">
+            <span>로그인</span>
+            <span>회원가입</span>
         </div>
+        <div>
+            <span>HOME</span>
+            <span>GAME</span>
+            <span>RANKING</span>
+            <span>FORUM</span>
+        </div>
+        </>
     )
 }
 

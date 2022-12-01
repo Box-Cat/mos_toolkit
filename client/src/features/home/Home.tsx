@@ -1,4 +1,5 @@
 import React from 'react'
+import './Home.css';
 
 const Home = () => { //1)HTML골격->리액트로 변경 2)CSS->tailwind로 변경  3)JS 기능 순차적 적용 ㄱ.세션나누기 ㄴ.스크롤 ㄷ.스크롤 애니
   return (
