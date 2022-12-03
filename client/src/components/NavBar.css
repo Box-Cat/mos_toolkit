@@ -1,0 +1,25 @@
+@charset 'utf-8';
+
+.nav{
+    height: 80px;
+    background-color: #1E3269;
+}
+
+.nav-links{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    height: 50%;
+}
+
+.nav-links.nav-auth{
+    justify-content: flex-end !important; 
+}
+
+.link{
+    text-decoration: none;
+    color: #fff;
+    margin: 0 10px;
+}
