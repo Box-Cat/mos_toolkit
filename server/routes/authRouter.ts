@@ -74,7 +74,7 @@ authRouter.post('/login', async (req: any, res: any) => {
                     });
 
                 } else {
-                    res.send({ message: "User doesn't exist" });
+                    res.send({ message: "User doesn't exist", pass: false });
                     console.log("유저없다")
                 }
             }
